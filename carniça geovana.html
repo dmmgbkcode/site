@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tela Interativa</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        
+        .container {
+            text-align: center;
+            width: 90%;
+            max-width: 500px;
+        }
+        
+        .button {
+            padding: 15px 30px;
+            font-size: 18px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+            touch-action: manipulation;
+        }
+        
+        .button:hover {
+            background-color: #45a049;
+        }
+        
+        .button:active {
+            background-color: #3d8b41;
+        }
+        
+        .messages {
+            margin-top: 20px;
+            height: 300px;
+            width: 100%;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .message {
+            background-color: #fff;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            max-width: 90%;
+            width: fit-content;
+        }
+        
+        .emoji {
+            font-size: 24px;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Clique no Botão</h1>
+        <button class="button" id="clickButton">Clique Aqui</button>
+        <div class="messages" id="messageContainer"></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const button = document.getElementById('clickButton');
+            const messageContainer = document.getElementById('messageContainer');
+            
+            const messages = [
+                { emoji: '🤢', text: "Você fede a bosta Geovana" },
+                { emoji: '🤮', text: "Nossa, que cheiro horrível, Geovana" },
+                { emoji: '😖', text: "Geovana, você precisa de um banho" },
+                { emoji: '👃', text: "Que cheiro é esse, Geovana?" },
+                { emoji: '😵', text: "Estou passando mal com esse cheiro de carniça, Geovana" },
+                { emoji: '🤧', text: "Geovana, que odor desagradável, cheiro de carniça" }
+            ];
+            
+            function handleClick() {
+                // Seleciona uma mensagem aleatória
+                const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+                
+                // Cria o elemento de mensagem
+                const messageElement = document.createElement('div');
+                messageElement.className = 'message';
+                
+                // Adiciona o emoji e o texto
+                const emojiSpan = document.createElement('span');
+                emojiSpan.className = 'emoji';
+                emojiSpan.textContent = randomMessage.emoji;
+                
+                const textSpan = document.createElement('span');
+                textSpan.textContent = randomMessage.text;
+                
+                messageElement.appendChild(emojiSpan);
+                messageElement.appendChild(textSpan);
+                
+                // Adiciona a mensagem ao container
+                messageContainer.appendChild(messageElement);
+                
+                // Rola para a mensagem mais recente
+                messageContainer.scrollTop = messageContainer.scrollHeight;
+            }
+            
+            // Adiciona eventos para mouse e touch
+            button.addEventListener('click', handleClick);
+            button.addEventListener('touchend', function(e) {
+                e.preventDefault();
+                handleClick();
+            });
+        });
+    </script>
+</body>
+</html>
